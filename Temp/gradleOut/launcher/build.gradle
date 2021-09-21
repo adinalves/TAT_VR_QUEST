@@ -18,7 +18,7 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 29
-        applicationId 'com.DefaultCompany.MovimentoeCmeradeFPS'
+        applicationId 'com.DefaultCompany.RealisticVRWeapons'
         ndk {
             abiFilters 'armeabi-v7a'
         }

@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour {
     float speed = 10f;
 
     float gravity = 0.25f;
+    
 
     float wind    = 0;
 

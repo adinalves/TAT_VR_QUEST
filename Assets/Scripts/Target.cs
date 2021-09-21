@@ -10,6 +10,7 @@ public class Target : MonoBehaviour, IShotHit {
     public List<Vector3> vetores = new List<Vector3>();
     public float mediaX = 0;
     public float mediaY = 0;
+    public float num = 1;
     
     
 
@@ -75,8 +76,25 @@ public class Target : MonoBehaviour, IShotHit {
         return acertos;
     }
 
+    public float getNum()
+    {
+        return num;
+    }
     
+    void OnCollisionEnter(Collision collision)
+    {
 
+        Vector3 linePos = collision.transform.position;
+        Posicao(linePos);
+        float linePosX = collision.transform.position.x;
+        //acertos = acertos + 10;
+        num = linePosX;
+        acertos++;
+        // if(collision.gameObject.CompareTag("alvo"))
+        // {
+        //     acertos ++;
+        // }
+    }
 
 }
 

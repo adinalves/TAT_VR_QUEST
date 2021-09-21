@@ -18,6 +18,9 @@ public class Gun : MonoBehaviour {
     string gunName = "Pistol";
     public int bulletCount = 15;
     public GameObject CanvasResultado;
+
+    //public Text logText;
+    private bool isRightTriggerReleased = true;
     
     
 
@@ -41,10 +44,16 @@ public class Gun : MonoBehaviour {
     void Update() {
         
         
-        if(Input.GetKeyDown(KeyCode.Mouse0) && Cursor.visible == false) {
+       
 
-        
-            bulletCount--;
+         //Se clicar com o gatilho direito, mostrar/esconder binóculo
+        OVRInput.Update();
+        if (isRightTriggerReleased && (OVRInput.Get(OVRInput.RawAxis1D.RIndexTrigger) >= 0.5f))
+        {
+            isRightTriggerReleased = false;
+           // logText.text = "APERTOU O GATILHO - Posição " + OVRInput.Get(OVRInput.RawAxis1D.RIndexTrigger);
+
+             bulletCount--;
             
             animator.Play("Shoot", -1, 0);
 
@@ -55,8 +64,21 @@ public class Gun : MonoBehaviour {
 
             // implementação do tiro vem aqui
             ShootBullet();
+           // ShootRaycast();
+        }
+        else
+        {
+            isRightTriggerReleased = true;
+            //logText.text = "GATILHO LIVRE - Posição " + OVRInput.Get(OVRInput.RawAxis1D.RIndexTrigger);
+        }
 
-        } 
+
+
+
+
+
+
+
 
         if(CanvasResultado.activeSelf)
         {
@@ -87,6 +109,22 @@ public class Gun : MonoBehaviour {
         }
 
     }
+
+
+    void ShootRaycast() {
+
+        RaycastHit hitInfo;
+        if(Physics.Raycast(fpsCam.transform.position, fpsCam.GetForwardDirection(), out hitInfo, Mathf.Infinity, LayerMask.GetMask("hittable"))) {
+
+            IShotHit hitted = hitInfo.transform.GetComponent<IShotHit>();
+            if(hitted != null) {
+
+                hitted.Hit(fpsCam.GetForwardDirection());
+
+            }
+        }
+    }
+
 
 
 
